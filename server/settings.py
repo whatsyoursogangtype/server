@@ -33,7 +33,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-# AUTH_USER = 'user.User'
 
 # Application definition
 INSTALLED_APPS = [
@@ -47,6 +46,7 @@ INSTALLED_APPS = [
 
     # application
     'user.apps.UserConfig',
+    'statistic.apps.StatisticConfig',
 
     # drf
     'rest_framework',
