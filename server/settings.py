@@ -67,7 +67,7 @@ MIDDLEWARE = [
 
 # CSRF 관련 추가
 CSRF_TRUSTED_ORIGINS = [
-    'https://port-0-server-108dypx2aldtr78gf.sel3.cloudtype.app/',
+    'https://port-0-server-108dypx2aldtr78gf.sel3.cloudtype.app',
 ]
 
 # CORS 관련 추가
