@@ -65,6 +65,11 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
+# CSRF 관련 추가
+CSRF_TRUSTED_ORIGINS = [
+    'https://port-0-server-108dypx2aldtr78gf.sel3.cloudtype.app/',
+]
+
 # CORS 관련 추가
 # CORS_ORIGIN_WHITELIST = ['http://127.0.0.1:3000', 'http://localhost:3000']
 ALLOWED_HOSTS = ['*']
