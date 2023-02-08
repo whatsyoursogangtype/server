@@ -68,13 +68,20 @@ MIDDLEWARE = [
 # CSRF 관련 추가
 CSRF_TRUSTED_ORIGINS = [
     'https://port-0-server-108dypx2aldtr78gf.sel3.cloudtype.app',
+    'https://client-ucqx.vercel.app',
+    'https://www.sogangtype.com',
 ]
 
 # CORS 관련 추가
-# CORS_ORIGIN_WHITELIST = ['http://127.0.0.1:3000', 'http://localhost:3000']
 ALLOWED_HOSTS = ['*']
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_WHITELIST = [
+    'http://127.0.0.1:3000',
+    'http://localhost:3000',
+    'https://client-ucqx.vercel.app',
+    'https://www.sogangtype.com',
+]
 
 ROOT_URLCONF = 'server.urls'
 
