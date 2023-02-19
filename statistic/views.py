@@ -1,6 +1,6 @@
-from rest_framework.generics import RetrieveAPIView
+from rest_framework.generics import RetrieveAPIView, ListAPIView
 from rest_framework.response import Response
-from .serializers import StatisticSerializer, RankSerializer
+from .serializers import *
 from user.models import User
 from statistics import mode
 
@@ -25,11 +25,12 @@ class StatisticView(RetrieveAPIView):
         mode_type = mode(list(user_type_user.values_list('major',flat=True)))
 
         instance = dict()
-        instance['stat1'] = int(user_type_user.count() / total_user.count()*100)
+        instance['stat1'] = int(round(user_type_user.count() / total_user.count()*100, 0))
         instance['stat2'] = mode_type
-        instance['stat3'] = int(user_type_major_user.count() / user_type_user.count()*100)
+        instance['stat3'] = int(round(user_type_major_user.count() / user_type_user.count()*100, 0))
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
+
 
 class RankView(RetrieveAPIView):
     queryset = User.objects.all()
@@ -37,19 +38,41 @@ class RankView(RetrieveAPIView):
 
     def retrieve(self, request, *args, **kwargs):
         type_list = list(User.objects.all().values_list('sg_type',flat=True))
-        types = {'커피브레이크','로욜라','X관랩실','취업지원팀','알바트로스탑','경의선숲길','빨간잠망경','서강포차'}
         
         instance = dict()
         for i in range(1,9):
             val_name = 'rank{}'.format(i)
+
             if not type_list:
                 instance[val_name] = [None, None]
                 continue
+
             mode_type = mode(type_list)
             mode_ratio = round(User.objects.filter(sg_type=mode_type).count()/User.objects.all().count()*100,2)
             instance[val_name] = [mode_type, mode_ratio]
-            for j in type_list: 
-                if j == mode_type: type_list.remove(mode_type)
+            new_list = [x for x in type_list if x != mode_type]
+            type_list = new_list
 
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
+
+
+# class RankkView(ListAPIView):
+#     queryset = None
+#     serializer_class = None
+
+#     def list(self, request, *args, **kwargs):
+#         queryset = [0] * 8
+#         type_list = list(User.objects.all().values_list('sg_type',flat=True))
+        
+#         for i in range(8):
+#             if not type_list:
+#                 queryset[i] = {None:None}
+#                 continue
+#             mode_type = mode(type_list)
+#             mode_ratio = round(User.objects.filter(sg_type=mode_type).count()/User.objects.all().count()*100,2)
+#             queryset[i] = {mode_type : mode_ratio}
+#             for j in type_list: 
+#                 if j == mode_type: type_list.remove(mode_type)
+
+#         return Response(queryset)

@@ -16,3 +16,6 @@ class RankSerializer(serializers.Serializer):
     rank6 = serializers.ListField()
     rank7 = serializers.ListField()
     rank8 = serializers.ListField()
+
+# class RankkSerializer(serializers.Serializer):
+#     rank = serializers.JSONField()
